@@ -13,10 +13,10 @@ import java.util.stream.Stream;
 import static com.johnpickup.util.FileUtils.getInputFilenames;
 
 @RequiredArgsConstructor
-public class Part1 {
+public class Day1 {
     static boolean isTest;
     public static void main(String[] args) {
-        List<String> inputFilenames = getInputFilenames("2025", "Part1");
+        List<String> inputFilenames = getInputFilenames("2025", "Day1");
         for (String inputFilename : inputFilenames) {
             
             long start = System.currentTimeMillis();
@@ -31,7 +31,7 @@ public class Part1 {
                 List<String> names = Arrays.asList(lines.get(0).split(","));
                 List<String> moves = Arrays.asList(lines.get(1).split(","));
 
-                Part1 part1 = new Part1(names, moves.stream().map(Move::parse).collect(Collectors.toList()));
+                Day1 part1 = new Day1(names, moves.stream().map(Move::parse).collect(Collectors.toList()));
 
                 System.out.println("Part 1: " +  part1.solvePart1());
                 System.out.println("Part 2: " +  part1.solvePart2());

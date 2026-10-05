@@ -20,9 +20,8 @@ public class FileUtils {
 
     public static List<String> getInputFilenames(String year, String day) {
         File resourceDirectory = resourceDirectory(year, day);
-        String prefix = resourceDirectory.getAbsolutePath() + "/" + day;
-//        createEmptyTestFileIfMissing(prefix + "-test.txt");
-//        createEmptyTestFileIfMissing(prefix + ".txt");
+        createEmptyTestFileIfMissing(resourceDirectory.getAbsolutePath() + "/1-test.txt");
+        createEmptyTestFileIfMissing(resourceDirectory.getAbsolutePath() + "/1.txt");
 //        createEmptyTestFileIfMissing( resourceDirectory.getAbsolutePath() + "/instructions.txt");
         return Arrays.stream(resourceDirectory.listFiles((dir, name) ->
                         name.endsWith(".txt") && !name.startsWith("instructions")))

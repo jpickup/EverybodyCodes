@@ -11,10 +11,10 @@ import java.util.stream.Stream;
 
 import static com.johnpickup.util.FileUtils.getInputFilenames;
 
-public class Part2 {
+public class Day2 {
     static boolean isTest;
     public static void main(String[] args) {
-        List<String> inputFilenames = getInputFilenames("2025", "Part2");
+        List<String> inputFilenames = getInputFilenames("2025", "Day2");
         for (String inputFilename : inputFilenames) {
             
             long start = System.currentTimeMillis();

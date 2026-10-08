@@ -22,9 +22,14 @@ public class FileUtils {
         File resourceDirectory = resourceDirectory(year, day);
         createEmptyTestFileIfMissing(resourceDirectory.getAbsolutePath() + "/1-test.txt");
         createEmptyTestFileIfMissing(resourceDirectory.getAbsolutePath() + "/1.txt");
+        createEmptyTestFileIfMissing(resourceDirectory.getAbsolutePath() + "/2-test.txt");
+        createEmptyTestFileIfMissing(resourceDirectory.getAbsolutePath() + "/2.txt");
+        createEmptyTestFileIfMissing(resourceDirectory.getAbsolutePath() + "/3-test.txt");
+        createEmptyTestFileIfMissing(resourceDirectory.getAbsolutePath() + "/3.txt");
 //        createEmptyTestFileIfMissing( resourceDirectory.getAbsolutePath() + "/instructions.txt");
         return Arrays.stream(resourceDirectory.listFiles((dir, name) ->
                         name.endsWith(".txt") && !name.startsWith("instructions")))
+                .filter(file -> file.length() > 0)
                 .map(file -> file.getAbsolutePath())
                 .sorted(FileUtils::sortTestFilesFirst)
                 .collect(Collectors.toList());

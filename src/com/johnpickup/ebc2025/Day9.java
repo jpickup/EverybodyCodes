@@ -41,6 +41,23 @@ public class Day9 {
         }
     }
 
+    static long part1(List<DnaProfile> dnaProfiles) {
+        DnaProfile child = null;
+        for (DnaProfile dnaProfile : dnaProfiles) {
+            if (dnaProfile.isPossibleChild(dnaProfiles)) {
+                child = dnaProfile;
+            }
+        }
+        if (child == null) throw new RuntimeException("Could not find a child");
+        long result = 1L;
+        for (DnaProfile dnaProfile : dnaProfiles) {
+            if (dnaProfile != child) {
+                result *= child.similarity(dnaProfile);
+            }
+        }
+        return result;
+    }
+
     private static long part2(List<DnaProfile> dnaProfiles) {
         long result = 0;
         for (DnaProfile child : dnaProfiles) {
@@ -54,7 +71,6 @@ public class Day9 {
                 }
             }
         }
-
         return result;
     }
 
@@ -75,7 +91,7 @@ public class Day9 {
                 }
             }
         }
-
+        // merge families with common members
         boolean madeProgress;
         do {
             madeProgress = false;
@@ -93,30 +109,10 @@ public class Day9 {
         } while (madeProgress);
 
         Family biggest = families.getFirst();
-
         for (Family family : families) {
             if (family.size() > biggest.size()) biggest = family;
         }
-
         return biggest.scaleSum();
-
-    }
-
-    static long part1(List<DnaProfile> dnaProfiles) {
-        DnaProfile child = null;
-        for (DnaProfile dnaProfile : dnaProfiles) {
-            if (dnaProfile.isPossibleChild(dnaProfiles)) {
-                child = dnaProfile;
-            }
-        }
-
-        long result = 1L;
-        for (DnaProfile dnaProfile : dnaProfiles) {
-            if (dnaProfile != child) {
-                result *= child.similarity(dnaProfile);
-            }
-        }
-        return result;
     }
 
     static class Family {

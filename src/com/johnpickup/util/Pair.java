@@ -14,6 +14,6 @@ public class Pair<S, T> {
 
     @Override
     public String toString() {
-        return String.format("(%s + %s)", value1, value2);
+        return String.format("(%s, %s)", value1, value2);
     }
 }

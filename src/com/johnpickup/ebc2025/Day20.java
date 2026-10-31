@@ -30,8 +30,10 @@ public class Day20 {
                         .toList();
 
                 Maze maze = new Maze(lines);
+                System.out.println(maze);
                 System.out.println("Part 1: " + maze.part1());
                 System.out.println("Part 2: " + maze.part2());
+                System.out.println("Part 3: " + maze.part3());
 
 
             } catch (IOException e) {
@@ -43,8 +45,27 @@ public class Day20 {
     }
     static class Maze {
         final CharGrid grid;
+        final CharGrid expandedGrid;
         Maze(List<String> lines) {
             grid = new CharGrid(lines);
+            expandedGrid = new CharGrid(grid.getWidth(), grid.getWidth());
+            for (int x = 0 ; x < grid.getWidth(); x++) {
+                for (int y = 0 ; y < grid.getWidth(); y++) {
+                    Coord coord = new Coord(x, y);
+                    char t = '.';
+                    expandedGrid.setCell(coord, t);
+                    if ((x+y) % 2 == 0) {
+                        Coord sourceCoord = new Coord(x, y);
+                        t = grid.getCell(sourceCoord);
+                    }
+                    expandedGrid.setCell(coord, t);
+                }
+            }
+        }
+
+        @Override
+        public String toString() {
+            return expandedGrid.toString();
         }
 
         public int part1() {
@@ -63,6 +84,12 @@ public class Day20 {
         public long part2() {
             if (grid.findCells('S').isEmpty() || grid.findCells('E').isEmpty()) return 0;
             MazeSolver solver = new MazeSolver(grid);
+            return solver.lowestCost();
+        }
+
+        public long part3() {
+            if (grid.findCells('S').isEmpty() || grid.findCells('E').isEmpty()) return 0;
+            RotatingMazeSolver solver = new RotatingMazeSolver(grid);
             return solver.lowestCost();
         }
     }
@@ -124,4 +151,51 @@ public class Day20 {
             return false;
         }
     }
+
+    @RequiredArgsConstructor
+    static class RotatingMazeSolver extends Dijkstra<Coord> {
+        final CharGrid grid;
+        @Override
+        protected Set<Coord> allStates() {
+            Set<Coord> result = new HashSet<>();
+            int max = Math.max(grid.getWidth(), grid.getHeight());
+
+            for (int x = 0 ; x < max; x++) {
+                for (int y = 0 ; y < max; y++) {
+                    result.add(new Coord(x,y));
+                }
+            }
+            return result;
+        }
+
+        @Override
+        protected Coord initialState() {
+            return grid.findCells('S').stream().findFirst().orElseThrow();
+        }
+
+        @Override
+        protected Coord targetState() {
+            return grid.findCells('E').stream().findFirst().orElseThrow();
+        }
+
+        @Override
+        protected long calculateCost(Coord fromState, Coord toState) {
+            return 1;
+        }
+
+        @Override
+        protected boolean statesAreConnected(Coord toState, Coord fromState) {
+            return areAdjacent(fromState, rotate(toState));
+        }
+
+        @Override
+        protected boolean findAllRoutes() {
+            return false;
+        }
+    }
+
+    static Coord rotate(Coord c) {
+        return c;
+    }
+
 }

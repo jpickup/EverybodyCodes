@@ -154,8 +154,6 @@ public class Quest5 {
             return item.stream().anyMatch(ch -> grid.getCell(coord) == ch);
         }
 
-
-
         private void fillWater() {
             grid.allCells().forEach(c -> {
                 if (grid.getCell(c) != LAND) grid.setCell(c, WATER);
@@ -183,32 +181,23 @@ public class Quest5 {
         }
 
         private boolean canBeLand(Coord c) {
-            return c.adjacent8().stream()
-                    .map(a -> grid.getCell(a) == LAND || grid.getCell(a) == '1' ? 1 : 0)
-                    .reduce(0, Integer::sum) >= 5;
+            return grid.countAdjacent(c, LAND) + grid.countAdjacent(c, '1') >= 5;
         }
 
         private boolean canBeSand(Coord c) {
-            return c.adjacent8().stream()
-                    .map(a -> grid.getCell(a) == WATER || grid.getCell(a) == SAND || grid.getCell(a) == UNKNOWN ? 1 : 0)
-                    .reduce(0, Integer::sum) >= 5;
+            return grid.countAdjacent(c, WATER) + grid.countAdjacent(c, SAND) + grid.countAdjacent(c, UNKNOWN) >= 5;
         }
 
         private boolean hasAdjacentLand(Coord c) {
-            return hasAdjacent(c, LAND);
+            return grid.hasAdjacent(c, LAND);
         }
 
         private boolean hasAdjacentSand(Coord c) {
-            return hasAdjacent(c, SAND);
+            return grid.hasAdjacent(c, SAND);
         }
 
         private boolean hasAdjacentWater(Coord c) {
-            return hasAdjacent(c, WATER);
-        }
-
-        private boolean hasAdjacent(Coord c, char ch) {
-            return c.adjacent8().stream()
-                    .anyMatch(a -> grid.getCell(a) == ch);
+            return grid.hasAdjacent(c, WATER);
         }
 
         private void setCentreAsLand() {

@@ -229,6 +229,17 @@ public class CharGrid implements Grid<Character> {
         return result;
     }
 
+    public boolean hasAdjacent(Coord c, char ch) {
+        return c.adjacent8().stream()
+                .anyMatch(a -> getCell(a) == ch);
+    }
+
+    public long countAdjacent(Coord c, char ch) {
+        return c.adjacent8().stream()
+                .filter(a -> getCell(a) == ch)
+                .count();
+    }
+
     public Set<CharGrid> generateVariants() {
         return generateGridVariants(this);
     }

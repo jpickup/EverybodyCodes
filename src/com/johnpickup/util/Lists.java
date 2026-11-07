@@ -15,4 +15,17 @@ public class Lists {
         result.remove(item);
         return result;
     }
+
+    public static <T> List<T> withAll(List<T> list, List<T> items) {
+        List<T> result = new ArrayList<>(list);
+        result.addAll(items);
+        return result;
+    }
+
+    public static <T> List<T> withoutAll(List<T> list, List<T> items) {
+        List<T> result = new ArrayList<>(list);
+        result.removeAll(items);
+        return result;
+    }
+
 }

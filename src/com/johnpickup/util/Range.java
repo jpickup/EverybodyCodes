@@ -85,4 +85,9 @@ public class Range<T extends Comparable<T>> implements Comparable<Range<T>> {
         if (compareLower != 0) return compareLower;
         return upper.compareTo(o.upper);
     }
+
+    public boolean isWithin(Range<T> o) {
+        return lower.compareTo(o.lower) >= 0
+                && upper.compareTo(o.upper) <= 0;
+    }
 }
